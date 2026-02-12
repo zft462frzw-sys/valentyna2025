@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Для тебе 💌</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Segoe UI', 'Arial', sans-serif;
+      background: linear-gradient(145deg, #ffdde1 0%, #ffb6c1 100%);
+      height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 16px;
+      position: relative;
+    }
+
+    .screen {
+      max-width: 400px;
+      width: 100%;
+      background: rgba(255, 255, 255, 0.7);
+      backdrop-filter: blur(12px);
+      border-radius: 48px;
+      padding: 40px 24px;
+      box-shadow: 0 20px 40px rgba(255, 105, 135, 0.2);
+      text-align: center;
+      border: 2px solid rgba(255, 255, 255, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    h1, h2 {
+      font-size: 32px;
+      font-weight: 600;
+      color: #9f2b2b;
+      margin-bottom: 24px;
+    }
+
+    p {
+      font-size: 22px;
+      color: #b13b3b;
+      margin-bottom: 32px;
+    }
+
+    .emoji-big {
+      font-size: 80px;
+      margin-bottom: 16px;
+    }
+
+    .envelope {
+      font-size: 100px;
+      margin-bottom: 20px;
+      animation: float 3s infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0); }
+    }
+
+    button {
+      background: #ff8a8a;
+      border: none;
+      color: white;
+      font-size: 24px;
+      font-weight: 600;
+      padding: 16px 40px;
+      border-radius: 40px;
+      box-shadow: 0 10px 0 #b24b4b;
+      cursor: pointer;
+      transition: 0.08s linear;
+      margin-top: 20px;
+      border: 2px solid white;
+    }
+
+    button:active {
+      transform: translateY(10px);
+      box-shadow: 0 5px 0 #b24b4b;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .small-note {
+      font-size: 18px;
+      color: #a54242;
+      margin-top: 30px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <!-- СЦЕНА 1: Лист -->
+    <div id="scene1" class="screen">
+      <div class="envelope">💌</div>
+      <h2>У мене є малюсінька відкриточка для тебе! :З</h2>
+      <button onclick="nextScene(2)">Відкрити →</button>
+      <div class="small-note">✨ з любовʼю… Твоя Валентинка ✨</div>
+    </div>
+
+    <!-- СЦЕНА 2: Відкрити? -->
+    <div id="scene2" class="screen hidden">
+      <div class="emoji-big">📩✨</div>
+      <h2>Відкриєш?)</h2>
+      <button onclick="nextScene(3)">Так, відкрити! 💕</button>
+      <div style="margin-top: 16px;">
+        <button onclick="nextScene(1)" style="background: #d9b3b3; box-shadow: 0 10px 0 #8f6b6b; font-size: 20px;">Пізніше...</button>
+      </div>
+    </div>
+
+    <!-- СЦЕНА 3: Валентинка -->
+    <div id="scene3" class="screen hidden">
+      <div class="emoji-big">❤️🧸💘</div>
+      <h1>З днем закоханих, кошенятко! 💓</h1>
+      <p style="font-size: 26px;">🤍 Ти це все для мене.</p>
+      <button onclick="nextScene(4)">Далі →</button>
+    </div>
+
+    <!-- СЦЕНА 4: Питання -->
+    <div id="scene4" class="screen hidden">
+      <div class="emoji-big">🥺💌</div>
+      <h2>Ти ж будеш моєю валентинкою? ^^</h2>
+      <div style="display: flex; gap: 20px; justify-content: center; margin-top: 30px; flex-wrap: wrap;">
+        <button onclick="nextScene(5)" style="background: #ff4d4d;">ТАК ❤️</button>
+        <button id="noBtn" onmouseover="moveButton()" style="background: #b0b0b0; box-shadow: 0 10px 0 #5e5e5e;">НІ</button>
+      </div>
+      <p class="small-note">(кнопка "НІ" сором'язлива)</p>
+    </div>
+
+    <!-- СЦЕНА 5: Фінал -->
+    <div id="scene5" class="screen hidden">
+      <div class="emoji-big">😽💋💗</div>
+      <h1>БОЖЕ ТАААААК!!!</h1>
+      <p style="font-size: 28px;">💗 я дуже щаслива!</p>
+      <p style="font-size: 24px; margin-top: 20px;">💋 кохаю тебе</p>
+      <div style="margin-top: 30px; font-size: 40px;">🐻🎀✨</div>
+    </div>
+  </div>
+
+  <script>
+    function nextScene(sceneNumber) {
+      for (let i = 1; i <= 5; i++) {
+        let scene = document.getElementById('scene' + i);
+        if (scene) scene.classList.add('hidden');
+      }
+      let next = document.getElementById('scene' + sceneNumber);
+      if (next) next.classList.remove('hidden');
+    }
+
+    function moveButton() {
+      let noBtn = document.getElementById('noBtn');
+      if (noBtn) {
+        let x = Math.random() * (window.innerWidth - 200);
+        let y = Math.random() * (window.innerHeight - 200);
+        noBtn.style.position = 'absolute';
+        noBtn.style.left = x + 'px';
+        noBtn.style.top = y + 'px';
+      }
+    }
+
+    window.onload = function() {
+      nextScene(1);
+    }
+  </script>
+</body>
+</html>
